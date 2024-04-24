@@ -32,8 +32,6 @@ import java.util.concurrent.CompletableFuture;
  */
 public class HelloWorldProtocolAdapter extends AbstractPollingProtocolAdapter<HelloWorldAdapterConfig, HelloWorldData> {
 
-    private static final @NotNull Logger log = LoggerFactory.getLogger(HelloWorldProtocolAdapter.class);
-
     private final @NotNull HelloWorldAdapterConfig adapterConfig;
 
     public HelloWorldProtocolAdapter(final @NotNull ProtocolAdapterInformation adapterInformation,
@@ -50,10 +48,8 @@ public class HelloWorldProtocolAdapter extends AbstractPollingProtocolAdapter<He
         // if heavy lifting needs to be done, the future of this method can be set async to avoid blocking the calling thread.
         try {
             setConnectionStatus(ConnectionStatus.STATELESS);
-
             // start the implemented polling scheduling of the AbstractPollingProtocolAdapter
             startPolling(new Sampler(adapterConfig));
-
             return CompletableFuture.completedFuture(output);
         } catch (Exception e) {
             return CompletableFuture.failedFuture(e);
@@ -63,13 +59,6 @@ public class HelloWorldProtocolAdapter extends AbstractPollingProtocolAdapter<He
     @Override
     protected @NotNull CompletableFuture<Void> stopInternal() {
         return CompletableFuture.completedFuture(null);
-    }
-
-
-    @Override
-    protected @NotNull CompletableFuture<?> captureDataSample(final @NotNull HelloWorldData sample) {
-        log.info("captureDataSample invoked");
-        return super.captureDataSample(sample);
     }
 
     @Override
