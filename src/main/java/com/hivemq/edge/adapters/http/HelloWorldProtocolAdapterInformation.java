@@ -30,6 +30,8 @@ public class HelloWorldProtocolAdapterInformation extends AbstractProtocolAdapte
 
     public static final @NotNull ProtocolAdapterInformation INSTANCE = new HelloWorldProtocolAdapterInformation();
 
+    // TODO improve Java Doc
+
     protected HelloWorldProtocolAdapterInformation() {
     }
 
@@ -73,7 +75,7 @@ public class HelloWorldProtocolAdapterInformation extends AbstractProtocolAdapte
     @Override
     public @NotNull String getLogoUrl() {
         // this is a default image that is always available.
-        return "/images/hivemq-icon.png";
+        return "/images/helloWorld.png";
     }
 
     @Override
