@@ -35,17 +35,17 @@ public class HelloWorldProtocolAdapterInformation extends AbstractProtocolAdapte
 
     @Override
     public @NotNull String getProtocolName() {
-        return "CHANGE ME: The name of the protocol that your adapter uses.";
+        return "Hello World Protocol";
     }
 
     @Override
     public @NotNull String getProtocolId() {
-        return "MUST_NOT_CONTAIN_EMPTYSPACES";
+        return "Hello_World_Protocol";
     }
 
     @Override
     public @NotNull String getDisplayName() {
-        return "CHANGE ME: This will be displayed whenever your protocol adapter is referenced. (UI)";
+        return "Hello World Protocol Adapter";
     }
 
     @Override
@@ -55,7 +55,7 @@ public class HelloWorldProtocolAdapterInformation extends AbstractProtocolAdapte
 
     @Override
     public String getVersion() {
-        return "CHANGE ME: Here the description of your protocol adapter needs to go. 'super.getVersion()' can be used to get the Edge Version. ";
+        return "0.0.1";
     }
 
     @Override
@@ -68,6 +68,12 @@ public class HelloWorldProtocolAdapterInformation extends AbstractProtocolAdapte
     public byte getCapabilities() {
         // this indicates what capabilities this protocol adapter has. E.g. READ/WRITE. See the ProtocolAdapterCapability enum for more information.
         return ProtocolAdapterCapability.READ;
+    }
+
+    @Override
+    public @NotNull String getLogoUrl() {
+        // this is a default image that is always available.
+        return "/images/hivemq-icon.png";
     }
 
     @Override
