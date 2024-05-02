@@ -13,10 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.hivemq.edge.adapters.http;
+package com.hivemq.edge.adapters.helloworld;
 
 import com.hivemq.edge.modules.adapters.ProtocolAdapterConstants;
-import com.hivemq.edge.modules.adapters.model.impl.AbstractProtocolAdapterInformation;
 import com.hivemq.edge.modules.api.adapters.ProtocolAdapterCapability;
 import com.hivemq.edge.modules.api.adapters.ProtocolAdapterInformation;
 import com.hivemq.extension.sdk.api.annotations.NotNull;
@@ -26,7 +25,7 @@ import java.util.List;
 /**
  * @author HiveMQ Adapter Generator
  */
-public class HelloWorldProtocolAdapterInformation extends AbstractProtocolAdapterInformation {
+public class HelloWorldProtocolAdapterInformation implements ProtocolAdapterInformation {
 
     public static final @NotNull ProtocolAdapterInformation INSTANCE = new HelloWorldProtocolAdapterInformation();
 
@@ -56,7 +55,12 @@ public class HelloWorldProtocolAdapterInformation extends AbstractProtocolAdapte
     }
 
     @Override
-    public String getVersion() {
+    public @NotNull String getUrl() {
+        return null;
+    }
+
+    @Override
+    public @NotNull String getVersion() {
         return "0.0.1";
     }
 
@@ -76,6 +80,11 @@ public class HelloWorldProtocolAdapterInformation extends AbstractProtocolAdapte
     public @NotNull String getLogoUrl() {
         // this is a default image that is always available.
         return "/images/helloWorld.png";
+    }
+
+    @Override
+    public @NotNull String getAuthor() {
+        return null;
     }
 
     @Override

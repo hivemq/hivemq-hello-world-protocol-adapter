@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.hivemq.edge.adapters.http;
+package com.hivemq.edge.adapters.helloworld;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hivemq.edge.modules.config.CustomConfig;

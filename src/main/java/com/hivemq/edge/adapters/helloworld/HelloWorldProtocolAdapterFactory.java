@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.hivemq.edge.adapters.http;
+package com.hivemq.edge.adapters.helloworld;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hivemq.edge.modules.adapters.model.ProtocolAdapterInput;
@@ -36,12 +36,15 @@ public class HelloWorldProtocolAdapterFactory implements ProtocolAdapterFactory<
     }
 
     @Override
-    public @NotNull ProtocolAdapter createAdapter(final @NotNull ProtocolAdapterInformation adapterInformation, @NotNull final ProtocolAdapterInput<HelloWorldAdapterConfig> input) {
-        return new HelloWorldProtocolAdapter(adapterInformation, input.getConfig(), input.getMetricRegistry(), input.getVersion());
+    public @NotNull ProtocolAdapter createAdapter( final @NotNull ProtocolAdapterInformation adapterInformation, @NotNull final ProtocolAdapterInput<HelloWorldAdapterConfig> input) {
+
+
+        return new HelloWorldPollingProtocolAdapter(adapterInformation, input);
+          // return new HelloWorldSubscribingProtocolAdapter(adapterInformation, input);
     }
 
     @Override
-    public @NotNull HelloWorldAdapterConfig convertConfigObject(final @NotNull ObjectMapper objectMapper, final @NotNull Map<@NotNull String, Object> config) {
+    public @NotNull HelloWorldAdapterConfig convertConfigObject(final @NotNull ObjectMapper objectMapper, final @NotNull Map<String, Object> config) {
         return HelloWorldConfigConverter.convertConfig(objectMapper, config);
     }
 

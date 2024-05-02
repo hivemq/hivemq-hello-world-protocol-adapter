@@ -1,4 +1,4 @@
-package com.hivemq.edge.adapters.http;
+package com.hivemq.edge.adapters.helloworld;
 
 import org.junit.jupiter.api.Test;
 
