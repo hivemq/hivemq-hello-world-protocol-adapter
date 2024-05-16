@@ -15,11 +15,15 @@
  */
 package com.hivemq.edge.adapters.helloworld;
 
-import com.hivemq.edge.modules.adapters.ProtocolAdapterConstants;
-import com.hivemq.edge.modules.api.adapters.ProtocolAdapterCapability;
-import com.hivemq.edge.modules.api.adapters.ProtocolAdapterInformation;
-import com.hivemq.extension.sdk.api.annotations.NotNull;
 
+import com.hivemq.adapter.sdk.api.ProtocolAdapterCapability;
+import com.hivemq.adapter.sdk.api.ProtocolAdapterCategory;
+import com.hivemq.adapter.sdk.api.ProtocolAdapterInformation;
+import com.hivemq.adapter.sdk.api.ProtocolAdapterTag;
+import com.hivemq.extension.sdk.api.annotations.NotNull;
+import com.hivemq.extension.sdk.api.annotations.Nullable;
+
+import java.util.EnumSet;
 import java.util.List;
 
 /**
@@ -56,7 +60,7 @@ public class HelloWorldProtocolAdapterInformation implements ProtocolAdapterInfo
 
     @Override
     public @NotNull String getUrl() {
-        return null;
+        return "CHANGE_ME";
     }
 
     @Override
@@ -65,15 +69,9 @@ public class HelloWorldProtocolAdapterInformation implements ProtocolAdapterInfo
     }
 
     @Override
-    public ProtocolAdapterConstants.CATEGORY getCategory() {
-        // this indicates for which use cases this protocol adapter is intended. See the ProtocolAdapterConstants.CATEGORY enum for more information.
-        return ProtocolAdapterConstants.CATEGORY.CONNECTIVITY;
-    }
-
-    @Override
-    public byte getCapabilities() {
+    public @NotNull EnumSet<ProtocolAdapterCapability> getCapabilities() {
         // this indicates what capabilities this protocol adapter has. E.g. READ/WRITE. See the ProtocolAdapterCapability enum for more information.
-        return ProtocolAdapterCapability.READ;
+        return EnumSet.of(ProtocolAdapterCapability.READ);
     }
 
     @Override
@@ -84,14 +82,20 @@ public class HelloWorldProtocolAdapterInformation implements ProtocolAdapterInfo
 
     @Override
     public @NotNull String getAuthor() {
-        return null;
+        return "CHANGE_ME";
     }
 
     @Override
-    public List<ProtocolAdapterConstants.TAG> getTags() {
+    public @Nullable ProtocolAdapterCategory getCategory() {
+        // this indicates for which use cases this protocol adapter is intended. See the ProtocolAdapterConstants.CATEGORY enum for more information.
+        return ProtocolAdapterCategory.CONNECTIVITY;
+    }
+
+    @Override
+    public List<ProtocolAdapterTag> getTags() {
         // here you can set which Tags should be applied to this protocol adapter
-        return List.of(ProtocolAdapterConstants.TAG.INTERNET,
-                ProtocolAdapterConstants.TAG.TCP,
-                ProtocolAdapterConstants.TAG.WEB);
+        return List.of(ProtocolAdapterTag.INTERNET,
+                ProtocolAdapterTag.TCP,
+                ProtocolAdapterTag.WEB);
     }
 }

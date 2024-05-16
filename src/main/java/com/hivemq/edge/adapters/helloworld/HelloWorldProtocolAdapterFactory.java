@@ -15,15 +15,12 @@
  */
 package com.hivemq.edge.adapters.helloworld;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.hivemq.edge.modules.adapters.model.ProtocolAdapterInput;
-import com.hivemq.edge.modules.api.adapters.ProtocolAdapter;
-import com.hivemq.edge.modules.api.adapters.ProtocolAdapterFactory;
-import com.hivemq.edge.modules.api.adapters.ProtocolAdapterInformation;
-import com.hivemq.edge.modules.config.CustomConfig;
+import com.hivemq.adapter.sdk.api.ProtocolAdapter;
+import com.hivemq.adapter.sdk.api.ProtocolAdapterInformation;
+import com.hivemq.adapter.sdk.api.factories.ProtocolAdapterFactory;
+import com.hivemq.adapter.sdk.api.model.ProtocolAdapterInput;
+import com.hivemq.edge.adapters.helloworld.config.HelloWorldAdapterConfig;
 import com.hivemq.extension.sdk.api.annotations.NotNull;
-
-import java.util.Map;
 
 /**
  * @author HiveMQ Adapter Generator
@@ -36,22 +33,11 @@ public class HelloWorldProtocolAdapterFactory implements ProtocolAdapterFactory<
     }
 
     @Override
-    public @NotNull ProtocolAdapter createAdapter( final @NotNull ProtocolAdapterInformation adapterInformation, @NotNull final ProtocolAdapterInput<HelloWorldAdapterConfig> input) {
-
-
+    public @NotNull ProtocolAdapter createAdapter(final @NotNull ProtocolAdapterInformation adapterInformation, @NotNull final ProtocolAdapterInput<HelloWorldAdapterConfig> input) {
         return new HelloWorldPollingProtocolAdapter(adapterInformation, input);
           // return new HelloWorldSubscribingProtocolAdapter(adapterInformation, input);
     }
 
-    @Override
-    public @NotNull HelloWorldAdapterConfig convertConfigObject(final @NotNull ObjectMapper objectMapper, final @NotNull Map<String, Object> config) {
-        return HelloWorldConfigConverter.convertConfig(objectMapper, config);
-    }
-
-    @Override
-    public @NotNull Map<String, Object> unconvertConfigObject(final @NotNull ObjectMapper objectMapper, final @NotNull CustomConfig config) {
-        return HelloWorldConfigConverter.unconvertConfig(objectMapper, config);
-    }
 
     @Override
     public @NotNull Class<HelloWorldAdapterConfig> getConfigClass() {

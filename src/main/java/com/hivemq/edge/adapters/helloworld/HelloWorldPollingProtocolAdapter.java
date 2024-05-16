@@ -15,18 +15,22 @@
  */
 package com.hivemq.edge.adapters.helloworld;
 
-import com.hivemq.edge.adapters.helloworld.model.HelloWorldData;
-import com.hivemq.edge.modules.adapters.PollingProtocolAdapter;
-import com.hivemq.edge.modules.adapters.data.ProtocolAdapterDataSample;
-import com.hivemq.edge.modules.adapters.factories.AdapterFactories;
-import com.hivemq.edge.modules.adapters.model.ProtocolAdapterInput;
-import com.hivemq.edge.modules.adapters.model.ProtocolAdapterStartInput;
-import com.hivemq.edge.modules.adapters.model.ProtocolAdapterStartOutput;
-import com.hivemq.edge.modules.api.adapters.ProtocolAdapterInformation;
-import com.hivemq.edge.modules.api.adapters.ProtocolAdapterState;
-import com.hivemq.edge.modules.config.AdapterSubscription;
+import com.hivemq.adapter.sdk.api.ProtocolAdapterInformation;
+import com.hivemq.adapter.sdk.api.config.PollingContext;
+import com.hivemq.adapter.sdk.api.data.ProtocolAdapterDataSample;
+import com.hivemq.adapter.sdk.api.factories.AdapterFactories;
+import com.hivemq.adapter.sdk.api.model.ProtocolAdapterInput;
+import com.hivemq.adapter.sdk.api.model.ProtocolAdapterStartInput;
+import com.hivemq.adapter.sdk.api.model.ProtocolAdapterStartOutput;
+import com.hivemq.adapter.sdk.api.polling.PollingInput;
+import com.hivemq.adapter.sdk.api.polling.PollingOutput;
+import com.hivemq.adapter.sdk.api.polling.PollingProtocolAdapter;
+import com.hivemq.adapter.sdk.api.state.ProtocolAdapterState;
+import com.hivemq.edge.adapters.helloworld.config.HelloWorldAdapterConfig;
+import com.hivemq.edge.adapters.helloworld.config.HelloWorldPollingContext;
 import com.hivemq.extension.sdk.api.annotations.NotNull;
 
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 /**
@@ -37,25 +41,13 @@ public class HelloWorldPollingProtocolAdapter implements PollingProtocolAdapter 
     private final @NotNull HelloWorldAdapterConfig adapterConfig;
     private final @NotNull ProtocolAdapterInformation adapterInformation;
     private final @NotNull ProtocolAdapterState protocolAdapterState;
-    private final @NotNull AdapterFactories adapterFactories;
+    private final @NotNull HelloWorldPollingContext pollingContext;
 
     public HelloWorldPollingProtocolAdapter(final @NotNull ProtocolAdapterInformation adapterInformation, final @NotNull ProtocolAdapterInput<HelloWorldAdapterConfig> input) {
         this.adapterInformation = adapterInformation;
         this.adapterConfig = input.getConfig();
         this.protocolAdapterState = input.getProtocolAdapterState();
-        this.adapterFactories = input.adapterFactories();
-    }
-
-    @Override
-    public @NotNull CompletableFuture<? extends ProtocolAdapterDataSample> poll() {
-        // here the sampling must be done. F.e. sending a http request and returning the obtained value via a Completable Future
-
-
-        final AdapterSubscription adapterSubscription = adapterFactories.adapterSubscriptionFactory().create(adapterConfig.getDestination(), adapterConfig.getQos(), null);
-        final HelloWorldData data = new HelloWorldData(adapterSubscription, adapterConfig.getUrl(), adapterFactories.dataPointFactory());
-        data.addDataPoint("dataPoint1", 42);
-        data.addDataPoint("dataPoint2", 1337);
-        return CompletableFuture.completedFuture(data);
+        this.pollingContext = adapterConfig.getPollingContexts();
     }
 
     @Override
@@ -64,14 +56,13 @@ public class HelloWorldPollingProtocolAdapter implements PollingProtocolAdapter 
     }
 
     @Override
-    public @NotNull CompletableFuture<ProtocolAdapterStartOutput> start(final @NotNull ProtocolAdapterStartInput input, final @NotNull ProtocolAdapterStartOutput output) {
+    public void start(final @NotNull ProtocolAdapterStartInput input, final @NotNull ProtocolAdapterStartOutput output) {
         // any setup which should be done before the adapter starts polling comes here.
-        // if heavy lifting needs to be done, the future of this method can be set async to avoid blocking the calling thread.
         try {
             protocolAdapterState.setConnectionStatus(ProtocolAdapterState.ConnectionStatus.STATELESS);
-            return CompletableFuture.completedFuture(output);
+            output.startedSuccessfully();
         } catch (Exception e) {
-            return CompletableFuture.failedFuture(e);
+            output.failStart(e, null);
         }
     }
 
@@ -83,5 +74,28 @@ public class HelloWorldPollingProtocolAdapter implements PollingProtocolAdapter 
     @Override
     public @NotNull ProtocolAdapterInformation getProtocolAdapterInformation() {
         return adapterInformation;
+    }
+
+    @Override
+    public void poll(@NotNull PollingInput pollingInput, @NotNull PollingOutput pollingOutput) {
+        // here the sampling must be done. F.e. sending a http request
+        pollingOutput.addDataPoint("dataPoint1", 42);
+        pollingOutput.addDataPoint("dataPoint1", 1337);
+        pollingOutput.finish();
+    }
+
+    @Override
+    public @NotNull List<? extends PollingContext> getSubscriptions() {
+        return List.of(pollingContext);
+    }
+
+    @Override
+    public int getPollingIntervalMillis() {
+        return adapterConfig.getPollingIntervalMillis();
+    }
+
+    @Override
+    public int getMaxPollingErrorsBeforeRemoval() {
+        return adapterConfig.getMaxPollingErrorsBeforeRemoval();
     }
 }

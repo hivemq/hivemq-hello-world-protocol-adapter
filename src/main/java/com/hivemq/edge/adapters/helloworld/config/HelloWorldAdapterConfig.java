@@ -13,22 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.hivemq.edge.adapters.helloworld;
+package com.hivemq.edge.adapters.helloworld.config;
 
 import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import com.hivemq.edge.modules.adapters.annotations.ModuleConfigField;
-import com.hivemq.edge.modules.config.CustomConfig;
+import com.hivemq.adapter.sdk.api.annotations.ModuleConfigField;
+import com.hivemq.adapter.sdk.api.config.ProtocolAdapterConfig;
 import com.hivemq.extension.sdk.api.annotations.NotNull;
-import com.hivemq.extension.sdk.api.annotations.Nullable;
 
-import static com.hivemq.edge.HiveMQEdgeConstants.ID_REGEX;
 
+@SuppressWarnings({"unused", "FieldCanBeLocal", "FieldMayBeFinal"})
 @JsonPropertyOrder({
         "url",
         "destination"})
-public class HelloWorldAdapterConfig implements CustomConfig {
+public class HelloWorldAdapterConfig implements ProtocolAdapterConfig {
 
     @JsonProperty(value = "id", required = true)
     @ModuleConfigField(title = "Identifier",
@@ -47,64 +46,38 @@ public class HelloWorldAdapterConfig implements CustomConfig {
             numberMin = 1,
             required = true,
             defaultValue = "1000")
-    private int pollingIntervalMillis = 1000; //1 second
+    private int pollingIntervalMillis = 1000;
 
     @JsonProperty("maxPollingErrorsBeforeRemoval")
     @ModuleConfigField(title = "Max. Polling Errors",
             description = "Max. errors polling the endpoint before the polling daemon is stopped",
             numberMin = 3,
             defaultValue = "10")
-    private int maxPollingErrorsBeforeRemoval = DEFAULT_MAX_POLLING_ERROR_BEFORE_REMOVAL;
+    private int maxPollingErrorsBeforeRemoval = 10;
 
 
-    @JsonProperty("url")
-    @ModuleConfigField(title = "URL", description = "The url of the endpoint you want to connect to.",
-            format = ModuleConfigField.FieldType.URI, required = true)
-    private @NotNull String url;
-
-    @JsonProperty(value = "destination", required = true)
-    @ModuleConfigField(title = "Destination Topic",
-            description = "The topic to publish data on",
-            required = true,
-            format = ModuleConfigField.FieldType.MQTT_TOPIC)
-    private @Nullable String destination;
-
-    @JsonProperty(value = "qos", required = true)
-    @ModuleConfigField(title = "QoS",
-            description = "MQTT Quality of Service level",
-            required = true,
-            numberMin = 0,
-            numberMax = 2,
-            defaultValue = "0")
-    private int qos = 0;
+    @JsonProperty("endpoint")
+    @ModuleConfigField(title = "endpoint", description = "Map your sensor data to a MQTT Topic")
+    private @NotNull HelloWorldPollingContext pollingContexts;
 
     public HelloWorldAdapterConfig() {
     }
 
-    public @NotNull String getUrl() {
-        return url;
-    }
-
-    public @NotNull String getDestination() {
-        return destination;
-    }
-
-    public int getQos() {
-        return qos;
-    }
 
     @Override
     public @NotNull String getId() {
         return id;
     }
 
-    @Override
     public int getPollingIntervalMillis() {
-        return CustomConfig.super.getPollingIntervalMillis();
+        return pollingIntervalMillis;
     }
 
-    @Override
     public int getMaxPollingErrorsBeforeRemoval() {
-        return CustomConfig.super.getMaxPollingErrorsBeforeRemoval();
+        return maxPollingErrorsBeforeRemoval;
+    }
+
+    public @NotNull HelloWorldPollingContext getPollingContexts() {
+        return pollingContexts;
     }
 }

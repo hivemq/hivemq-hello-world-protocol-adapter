@@ -15,20 +15,25 @@
  */
 package com.hivemq.edge.adapters.helloworld;
 
-import com.hivemq.edge.modules.adapters.PollingProtocolAdapter;
-import com.hivemq.edge.modules.adapters.data.ProtocolAdapterDataSample;
-import com.hivemq.edge.modules.adapters.factories.AdapterFactories;
-import com.hivemq.edge.modules.adapters.model.*;
-import com.hivemq.edge.modules.api.adapters.ProtocolAdapterInformation;
-import com.hivemq.edge.modules.api.adapters.ProtocolAdapterState;
+import com.hivemq.adapter.sdk.api.ProtocolAdapter;
+import com.hivemq.adapter.sdk.api.ProtocolAdapterInformation;
+import com.hivemq.adapter.sdk.api.discovery.ProtocolAdapterDiscoveryInput;
+import com.hivemq.adapter.sdk.api.discovery.ProtocolAdapterDiscoveryOutput;
+import com.hivemq.adapter.sdk.api.factories.AdapterFactories;
+import com.hivemq.adapter.sdk.api.model.ProtocolAdapterInput;
+import com.hivemq.adapter.sdk.api.model.ProtocolAdapterStartInput;
+import com.hivemq.adapter.sdk.api.model.ProtocolAdapterStartOutput;
+import com.hivemq.adapter.sdk.api.state.ProtocolAdapterState;
+import com.hivemq.edge.adapters.helloworld.config.HelloWorldAdapterConfig;
 import com.hivemq.extension.sdk.api.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.concurrent.CompletableFuture;
 
-public class HelloWorldSubscribingProtocolAdapter implements PollingProtocolAdapter {
-    private static final Logger log = LoggerFactory.getLogger(HelloWorldSubscribingProtocolAdapter.class);
+@SuppressWarnings({"FieldCanBeLocal", "unused", "EmptyTryBlock"})
+public class HelloWorldSubscribingProtocolAdapter implements ProtocolAdapter {
+    private static final @NotNull Logger log = LoggerFactory.getLogger(HelloWorldSubscribingProtocolAdapter.class);
 
     private final @NotNull HelloWorldAdapterConfig adapterConfig;
     private final @NotNull ProtocolAdapterInformation adapterInformation;
@@ -48,13 +53,13 @@ public class HelloWorldSubscribingProtocolAdapter implements PollingProtocolAdap
     }
 
     @Override
-    public @NotNull CompletableFuture<ProtocolAdapterStartOutput> start(@NotNull ProtocolAdapterStartInput input, @NotNull ProtocolAdapterStartOutput output) {
+    public void start(@NotNull ProtocolAdapterStartInput input, @NotNull ProtocolAdapterStartOutput output) {
         try {
             // connect and subscribe your client here
-            return new CompletableFuture<>();
+            output.startedSuccessfully();
         } catch (Exception e) {
-            // error handling like logging
-            return CompletableFuture.failedFuture(e);
+            // error handling like logging and signaling edge that the start failed
+            output.failStart(e, null);
         }
     }
 
@@ -69,21 +74,7 @@ public class HelloWorldSubscribingProtocolAdapter implements PollingProtocolAdap
     }
 
     @Override
-    public @NotNull CompletableFuture<? extends ProtocolAdapterDataSample> poll() {
-        return null;
-    }
-
-
-    @Override
-    public @NotNull CompletableFuture<Void> discoverValues(
-            final @NotNull ProtocolAdapterDiscoveryInput input, final @NotNull ProtocolAdapterDiscoveryOutput output) {
-        return CompletableFuture.completedFuture(null);
-    }
-
-    @Override
     public @NotNull ProtocolAdapterInformation getProtocolAdapterInformation() {
         return adapterInformation;
     }
-
-
 }
