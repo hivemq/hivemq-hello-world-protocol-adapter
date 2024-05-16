@@ -39,15 +39,12 @@ This class contains all information on the adapter like name, protocol, descript
 
 ### Protocol Adapter (HelloWorldProtocolAdapter)
 
-This class contains the actual implementation of the protocol adapter. 
-TODO: Explain methods or reference java doc. 
+This class contains the actual implementation of the protocol adapter. The most interesting method is the poll() method, in which the actual data gathering is done. 
 
 
 ### AdapterConfig (HelloWorldAdapterConfig)
 
-The config class uses the Jackson framework to define the fields of the config. This way the config will automatically parsed from the input from the ui. 
-
-
+The config class uses the Jackson framework to define the fields of the config. This way the config will automatically be parsed from the input from the ui.
 
 ## How to change the adapter icon
 

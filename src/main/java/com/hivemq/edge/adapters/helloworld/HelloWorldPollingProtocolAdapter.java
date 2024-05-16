@@ -17,8 +17,6 @@ package com.hivemq.edge.adapters.helloworld;
 
 import com.hivemq.adapter.sdk.api.ProtocolAdapterInformation;
 import com.hivemq.adapter.sdk.api.config.PollingContext;
-import com.hivemq.adapter.sdk.api.data.ProtocolAdapterDataSample;
-import com.hivemq.adapter.sdk.api.factories.AdapterFactories;
 import com.hivemq.adapter.sdk.api.model.ProtocolAdapterInput;
 import com.hivemq.adapter.sdk.api.model.ProtocolAdapterStartInput;
 import com.hivemq.adapter.sdk.api.model.ProtocolAdapterStartOutput;

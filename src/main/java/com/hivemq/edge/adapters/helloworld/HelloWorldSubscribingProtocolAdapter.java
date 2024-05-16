@@ -17,8 +17,6 @@ package com.hivemq.edge.adapters.helloworld;
 
 import com.hivemq.adapter.sdk.api.ProtocolAdapter;
 import com.hivemq.adapter.sdk.api.ProtocolAdapterInformation;
-import com.hivemq.adapter.sdk.api.discovery.ProtocolAdapterDiscoveryInput;
-import com.hivemq.adapter.sdk.api.discovery.ProtocolAdapterDiscoveryOutput;
 import com.hivemq.adapter.sdk.api.factories.AdapterFactories;
 import com.hivemq.adapter.sdk.api.model.ProtocolAdapterInput;
 import com.hivemq.adapter.sdk.api.model.ProtocolAdapterStartInput;
