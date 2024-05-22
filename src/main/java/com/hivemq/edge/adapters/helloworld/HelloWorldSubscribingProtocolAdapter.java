@@ -18,16 +18,12 @@ package com.hivemq.edge.adapters.helloworld;
 import com.hivemq.adapter.sdk.api.ProtocolAdapter;
 import com.hivemq.adapter.sdk.api.ProtocolAdapterInformation;
 import com.hivemq.adapter.sdk.api.factories.AdapterFactories;
-import com.hivemq.adapter.sdk.api.model.ProtocolAdapterInput;
-import com.hivemq.adapter.sdk.api.model.ProtocolAdapterStartInput;
-import com.hivemq.adapter.sdk.api.model.ProtocolAdapterStartOutput;
+import com.hivemq.adapter.sdk.api.model.*;
 import com.hivemq.adapter.sdk.api.state.ProtocolAdapterState;
 import com.hivemq.edge.adapters.helloworld.config.HelloWorldAdapterConfig;
 import com.hivemq.extension.sdk.api.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.concurrent.CompletableFuture;
 
 @SuppressWarnings({"FieldCanBeLocal", "unused", "EmptyTryBlock"})
 public class HelloWorldSubscribingProtocolAdapter implements ProtocolAdapter {
@@ -62,13 +58,13 @@ public class HelloWorldSubscribingProtocolAdapter implements ProtocolAdapter {
     }
 
     @Override
-    public @NotNull CompletableFuture<Void> stop() {
+    public void stop(@NotNull ProtocolAdapterStopInput protocolAdapterStopInput, @NotNull ProtocolAdapterStopOutput protocolAdapterStopOutput) {
         try {
             // gracefully disconnect and cleanup resources here
         } catch (Exception e) {
-            return CompletableFuture.failedFuture(e);
+            protocolAdapterStopOutput.failStop(e, null);
         }
-        return CompletableFuture.completedFuture(null);
+        protocolAdapterStopOutput.stoppedSuccessfully();
     }
 
     @Override

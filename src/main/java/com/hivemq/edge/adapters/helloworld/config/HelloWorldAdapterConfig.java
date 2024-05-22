@@ -29,6 +29,8 @@ import com.hivemq.extension.sdk.api.annotations.NotNull;
         "destination"})
 public class HelloWorldAdapterConfig implements ProtocolAdapterConfig {
 
+    private static final @NotNull String ID_REGEX = "^([a-zA-Z_0-9-_])*$";
+
     @JsonProperty(value = "id", required = true)
     @ModuleConfigField(title = "Identifier",
             description = "Unique identifier for this protocol adapter",

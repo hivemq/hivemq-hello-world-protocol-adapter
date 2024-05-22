@@ -17,9 +17,7 @@ package com.hivemq.edge.adapters.helloworld;
 
 import com.hivemq.adapter.sdk.api.ProtocolAdapterInformation;
 import com.hivemq.adapter.sdk.api.config.PollingContext;
-import com.hivemq.adapter.sdk.api.model.ProtocolAdapterInput;
-import com.hivemq.adapter.sdk.api.model.ProtocolAdapterStartInput;
-import com.hivemq.adapter.sdk.api.model.ProtocolAdapterStartOutput;
+import com.hivemq.adapter.sdk.api.model.*;
 import com.hivemq.adapter.sdk.api.polling.PollingInput;
 import com.hivemq.adapter.sdk.api.polling.PollingOutput;
 import com.hivemq.adapter.sdk.api.polling.PollingProtocolAdapter;
@@ -65,9 +63,10 @@ public class HelloWorldPollingProtocolAdapter implements PollingProtocolAdapter 
     }
 
     @Override
-    public @NotNull CompletableFuture<Void> stop() {
-        return CompletableFuture.completedFuture(null);
+    public void stop(@NotNull ProtocolAdapterStopInput protocolAdapterStopInput, @NotNull ProtocolAdapterStopOutput protocolAdapterStopOutput) {
+        protocolAdapterStopOutput.stoppedSuccessfully();
     }
+
 
     @Override
     public @NotNull ProtocolAdapterInformation getProtocolAdapterInformation() {
@@ -83,7 +82,7 @@ public class HelloWorldPollingProtocolAdapter implements PollingProtocolAdapter 
     }
 
     @Override
-    public @NotNull List<? extends PollingContext> getSubscriptions() {
+    public @NotNull List<? extends PollingContext> getPollingContexts() {
         return List.of(pollingContext);
     }
 
