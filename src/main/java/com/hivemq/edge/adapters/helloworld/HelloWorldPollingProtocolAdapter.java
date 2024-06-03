@@ -16,7 +16,6 @@
 package com.hivemq.edge.adapters.helloworld;
 
 import com.hivemq.adapter.sdk.api.ProtocolAdapterInformation;
-import com.hivemq.adapter.sdk.api.config.PollingContext;
 import com.hivemq.adapter.sdk.api.model.*;
 import com.hivemq.adapter.sdk.api.polling.PollingInput;
 import com.hivemq.adapter.sdk.api.polling.PollingOutput;
@@ -27,10 +26,9 @@ import com.hivemq.edge.adapters.helloworld.config.HelloWorldPollingContext;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
 
 
-public class HelloWorldPollingProtocolAdapter implements PollingProtocolAdapter {
+public class HelloWorldPollingProtocolAdapter implements PollingProtocolAdapter<HelloWorldPollingContext> {
 
     private final @NotNull HelloWorldAdapterConfig adapterConfig;
     private final @NotNull ProtocolAdapterInformation adapterInformation;
@@ -72,15 +70,15 @@ public class HelloWorldPollingProtocolAdapter implements PollingProtocolAdapter 
     }
 
     @Override
-    public void poll(final @NotNull PollingInput pollingInput, final @NotNull PollingOutput pollingOutput) {
+    public void poll(final @NotNull PollingInput<HelloWorldPollingContext> pollingInput, final @NotNull PollingOutput pollingOutput) {
         // here the sampling must be done. F.e. sending a http request
         pollingOutput.addDataPoint("dataPoint1", 42);
-        pollingOutput.addDataPoint("dataPoint1", 1337);
+        pollingOutput.addDataPoint("dataPoint2", 1337);
         pollingOutput.finish();
     }
 
     @Override
-    public @NotNull List<? extends PollingContext> getPollingContexts() {
+    public @NotNull List<HelloWorldPollingContext> getPollingContexts() {
         return List.of(pollingContext);
     }
 
