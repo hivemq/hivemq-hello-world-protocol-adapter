@@ -1,15 +1,18 @@
 # Hello World Protocol Adapter
 
-This repository is meant to reduce the friction of implementing an own protocol adapter by providing a functioning frame. 
+This repository is meant to reduce the friction of implementing your own protocol adapter by providing a functioning frame. 
 
 ## Quick Start to implement your own polling protocol adapter
-In the following we will create an simple Protocol Adapter that polls data from an endpoint.
+In the following, we will create an simple Protocol Adapter that polls data from an endpoint.
 
-1. Check the setup of the project: Run the gradle task `shadowJar` via the IDE or via command line in the projects root: `./gradlew shadowJar`. There should be a jar named `hivemq-hello-world-protocol-adapter-<version>-all.jar` in the `build/libs/`. This way you can make sure that the setup of the project on your machine works before changing things and potentially breaking it doing so.
+1. Check the setup of the project: Run the gradle task `shadowJar` via the IDE or via command line in the projects root: `./gradlew shadowJar`. 
+There should be a jar named `hivemq-hello-world-protocol-adapter-<version>-all.jar` in the `build/libs/`. 
+This way you can make sure that the setup of the project on your machine works before changing things and potentially breaking it doing so.
 2. Create a very simple implementation of your protocol adapter by editing `HelloWorldPollingProtocolAdapter`. The `poll()` method is the key method, which contains the actual code that is called regularly by HiveMQ Edge to gather the data. 
-Data points can be added on the method's output parameter via `addDataPoint()`. When all data points are added, this is signalized via `finish()` on the output object. 
+Data points can be added on the method's output parameter via `addDataPoint()`. 
+When all data points are added, signal this with the `finish()` on the output object. 
 The values of the data points are then parsed into json. For native types, no further work is needed. If your value is a complex type with several fields, you need to tell HiveMQ Edge how to parse it into json. 
-This is done using the Jackson framework and its annotations. You likely want to test your simple implementation by creating the `jar` the same way as in the previous step and copying it to the modules folder in your HiveMQ Edge installation.
+This is done using the Jackson framework and its annotations.
 After (re)starting HiveMQ Edge, it should be visible in the protocol adapters section in the UI. You can create your adapter and test if it is working by subscribing to the mqtt topic you selected when creating your adapter in the ui.
 
 3. Most likely the default config of the `HelloWorldProtocolAdapter` is not enough. You can add further config in the `HelloWorldAdapterConfig` class which uses the Jackson framework for annotation and conversion of the config of the adapter. 
