@@ -32,3 +32,8 @@ dependencies {
 tasks.test {
     useJUnitPlatform()
 }
+
+license {
+    header = file("HEADER")
+    mapping("java", "SLASHSTAR_STYLE")
+}
