@@ -18,7 +18,7 @@ After (re)starting HiveMQ Edge, it should be visible in the protocol adapters se
 3. Most likely the default config of the `HelloWorldProtocolAdapter` is not enough. You can add further config in the `HelloWorldAdapterConfig` class which uses the Jackson framework for annotation and conversion of the config of the adapter. 
 
 4. In the `HelloWorldProtocolAdapterInformation` you can adapt the information on your protocol adapter, e.g. a custom name, description or logo for your protocol adapter. 
-This will be displayed in the UI. If you change the protocolId, this change also must be done in the config.xml of HiveMQ Edge, as this is the mapping between the configuration and the adapter. It may be easier to simply delete the old adapter section and create the adapter again via the UI.
+This will be displayed in the UI. If you change the protocolId, this change also must be done in the config.xml of HiveMQ Edge, as this is the mapping between the configuration and the adapter.
 5. Rename your classes and the project name
 6. Create your adapter.jar the same way as in `1.`
 7. Add your adapter to the modules folder of your HiveMQ Edge installation
