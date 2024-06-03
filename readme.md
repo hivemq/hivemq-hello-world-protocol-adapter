@@ -41,8 +41,7 @@ Per default the jar file will be named `hivemq-hello-world-protocol-adapter-<ver
 
 ### ProtocolAdapterFactory (HelloWorldProtocolAdapterFactory)
 
-This class is loaded by HiveMQ Edge via the service loader framework of Java. It supplies Edge with Information on the Adapter, Config and how the actual Adapter instance is to be constructed.
-The `HelloWorldProtocolAdapterFactory` already includes the necessary wiring of classes and there shouldn't be much work needed there besides renaming the class.
+This class is loaded by HiveMQ Edge via the service loader framework of Java. It supplies Edge with Information on the adapter, config and how the actual adapter instance is constructed.
 
 ### AdapterInformation (HelloWorldProtocolAdapterInformation)
 
@@ -55,7 +54,7 @@ This class contains the actual implementation of the protocol adapter. The most 
 
 ### AdapterConfig (HelloWorldAdapterConfig)
 
-The config class uses the Jackson framework to define the fields of the config. This way the config will automatically be parsed from the input from the ui.
+The config class uses the Jackson framework to define the fields of the config. This way, the config will automatically be parsed from the input from the ui.
 
 ## How to change the adapter icon
 
