@@ -32,7 +32,6 @@ public class HelloWorldProtocolAdapterFactory implements ProtocolAdapterFactory<
     @Override
     public @NotNull ProtocolAdapter createAdapter(final @NotNull ProtocolAdapterInformation adapterInformation, @NotNull final ProtocolAdapterInput<HelloWorldAdapterConfig> input) {
         return new HelloWorldPollingProtocolAdapter(adapterInformation, input);
-          // return new HelloWorldSubscribingProtocolAdapter(adapterInformation, input);
     }
 
 
