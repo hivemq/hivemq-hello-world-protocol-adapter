@@ -51,7 +51,7 @@ public class HelloWorldSubscribingProtocolAdapter implements ProtocolAdapter {
         try {
             // connect and subscribe your client here
             output.startedSuccessfully();
-        } catch (Exception e) {
+        } catch (final Exception e) {
             // error handling like logging and signaling edge that the start failed
             output.failStart(e, null);
         }
@@ -61,7 +61,7 @@ public class HelloWorldSubscribingProtocolAdapter implements ProtocolAdapter {
     public void stop(@NotNull ProtocolAdapterStopInput protocolAdapterStopInput, @NotNull ProtocolAdapterStopOutput protocolAdapterStopOutput) {
         try {
             // gracefully disconnect and cleanup resources here
-        } catch (Exception e) {
+        } catch (final Exception e) {
             protocolAdapterStopOutput.failStop(e, null);
         }
         protocolAdapterStopOutput.stoppedSuccessfully();

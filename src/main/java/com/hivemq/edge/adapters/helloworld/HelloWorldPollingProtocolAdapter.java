@@ -55,13 +55,13 @@ public class HelloWorldPollingProtocolAdapter implements PollingProtocolAdapter 
         try {
             protocolAdapterState.setConnectionStatus(ProtocolAdapterState.ConnectionStatus.STATELESS);
             output.startedSuccessfully();
-        } catch (Exception e) {
+        } catch (final Exception e) {
             output.failStart(e, null);
         }
     }
 
     @Override
-    public void stop(@NotNull ProtocolAdapterStopInput protocolAdapterStopInput, @NotNull ProtocolAdapterStopOutput protocolAdapterStopOutput) {
+    public void stop(final @NotNull ProtocolAdapterStopInput protocolAdapterStopInput, final @NotNull ProtocolAdapterStopOutput protocolAdapterStopOutput) {
         protocolAdapterStopOutput.stoppedSuccessfully();
     }
 
@@ -72,7 +72,7 @@ public class HelloWorldPollingProtocolAdapter implements PollingProtocolAdapter 
     }
 
     @Override
-    public void poll(@NotNull PollingInput pollingInput, @NotNull PollingOutput pollingOutput) {
+    public void poll(final @NotNull PollingInput pollingInput, final @NotNull PollingOutput pollingOutput) {
         // here the sampling must be done. F.e. sending a http request
         pollingOutput.addDataPoint("dataPoint1", 42);
         pollingOutput.addDataPoint("dataPoint1", 1337);
