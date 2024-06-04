@@ -15,12 +15,14 @@
  */
 package com.hivemq.edge.adapters.helloworld.config;
 
-import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.hivemq.adapter.sdk.api.annotations.ModuleConfigField;
 import com.hivemq.adapter.sdk.api.config.ProtocolAdapterConfig;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 @SuppressWarnings({"unused", "FieldCanBeLocal", "FieldMayBeFinal"})
@@ -57,9 +59,9 @@ public class HelloWorldAdapterConfig implements ProtocolAdapterConfig {
     private int maxPollingErrorsBeforeRemoval = 10;
 
 
-    @JsonProperty("endpoint")
-    @ModuleConfigField(title = "endpoint", description = "Map your sensor data to a MQTT Topic")
-    private @NotNull HelloWorldPollingContext pollingContexts;
+    @JsonProperty("subscriptions")
+    @ModuleConfigField(title = "subscription", description = "Map your sensor data to a MQTT Topic")
+    private @NotNull List<HelloWorldPollingContext> pollingContexts = new ArrayList<>();
 
     public HelloWorldAdapterConfig() {
     }
@@ -78,7 +80,7 @@ public class HelloWorldAdapterConfig implements ProtocolAdapterConfig {
         return maxPollingErrorsBeforeRemoval;
     }
 
-    public @NotNull HelloWorldPollingContext getPollingContexts() {
+    public @NotNull List<HelloWorldPollingContext> getPollingContexts() {
         return pollingContexts;
     }
 }
