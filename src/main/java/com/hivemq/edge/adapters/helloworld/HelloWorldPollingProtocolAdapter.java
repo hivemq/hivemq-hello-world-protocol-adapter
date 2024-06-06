@@ -33,7 +33,7 @@ public class HelloWorldPollingProtocolAdapter implements PollingProtocolAdapter<
     private final @NotNull HelloWorldAdapterConfig adapterConfig;
     private final @NotNull ProtocolAdapterInformation adapterInformation;
     private final @NotNull ProtocolAdapterState protocolAdapterState;
-    private final @NotNull HelloWorldPollingContext pollingContext;
+    private final @NotNull List<HelloWorldPollingContext> pollingContext;
 
     public HelloWorldPollingProtocolAdapter(final @NotNull ProtocolAdapterInformation adapterInformation, final @NotNull ProtocolAdapterInput<HelloWorldAdapterConfig> input) {
         this.adapterInformation = adapterInformation;
@@ -79,7 +79,7 @@ public class HelloWorldPollingProtocolAdapter implements PollingProtocolAdapter<
 
     @Override
     public @NotNull List<HelloWorldPollingContext> getPollingContexts() {
-        return List.of(pollingContext);
+        return pollingContext;
     }
 
     @Override
