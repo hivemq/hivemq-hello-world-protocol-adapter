@@ -3,12 +3,16 @@
     {
       "id": "coreFields",
       "title": "Settings",
-      "properties": ["id", "port", "host"]
+      "properties": [
+        "id"
+      ]
     },
     {
       "id": "subFields",
       "title": "Subscription",
-      "properties": ["subscriptions"]
+      "properties": [
+        "subscriptions"
+      ]
     },
     {
       "id": "publishing",
@@ -19,17 +23,22 @@
       ]
     }
   ],
-  "id": {
-    "ui:disabled": false
-  },
   "port": {
     "ui:widget": "updown"
   },
-  "ui:order": ["id", "host", "port", "*"],
+  "ui:order": [
+    "id",
+    "*"
+  ],
   "subscriptions": {
     "ui:batchMode": true,
     "items": {
-      "ui:order": ["destination", "qos", "*", "userProperties"],
+      "ui:order": [
+        "destination",
+        "qos",
+        "*",
+        "userProperties"
+      ],
       "ui:collapsable": {
         "titleKey": "destination"
       }
