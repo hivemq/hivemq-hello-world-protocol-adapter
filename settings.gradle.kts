@@ -8,3 +8,6 @@ pluginManagement {
         id("org.owasp.dependencycheck") version "${extra["plugin.dependencycheck.version"]}"
     }
 }
+
+//TODO remove
+includeBuild("../hivemq-edge-adapter-sdk")

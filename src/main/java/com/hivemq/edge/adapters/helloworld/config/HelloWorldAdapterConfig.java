@@ -15,10 +15,11 @@
  */
 package com.hivemq.edge.adapters.helloworld.config;
 
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.hivemq.adapter.sdk.api.annotations.ModuleConfigField;
-import com.hivemq.adapter.sdk.api.config.ProtocolAdapterConfig;
+import com.hivemq.adapter.sdk.api.config.ProtocolSpecificAdapterConfig;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -29,7 +30,7 @@ import java.util.List;
 @JsonPropertyOrder({
         "url",
         "destination"})
-public class HelloWorldAdapterConfig implements ProtocolAdapterConfig {
+public class HelloWorldAdapterConfig implements ProtocolSpecificAdapterConfig {
 
     private static final @NotNull String ID_REGEX = "^([a-zA-Z_0-9-_])*$";
 
@@ -59,17 +60,7 @@ public class HelloWorldAdapterConfig implements ProtocolAdapterConfig {
     private int maxPollingErrorsBeforeRemoval = 10;
 
 
-    @JsonProperty("subscriptions")
-    @ModuleConfigField(title = "subscription", description = "Map your sensor data to a MQTT Topic")
-    private @NotNull List<HelloWorldPollingContext> pollingContexts = new ArrayList<>();
-
     public HelloWorldAdapterConfig() {
-    }
-
-
-    @Override
-    public @NotNull String getId() {
-        return id;
     }
 
     public int getPollingIntervalMillis() {
@@ -78,9 +69,5 @@ public class HelloWorldAdapterConfig implements ProtocolAdapterConfig {
 
     public int getMaxPollingErrorsBeforeRemoval() {
         return maxPollingErrorsBeforeRemoval;
-    }
-
-    public @NotNull List<HelloWorldPollingContext> getPollingContexts() {
-        return pollingContexts;
     }
 }

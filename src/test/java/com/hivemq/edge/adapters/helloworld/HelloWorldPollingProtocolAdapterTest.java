@@ -16,11 +16,12 @@
 package com.hivemq.edge.adapters.helloworld;
 
 
+import com.hivemq.adapter.sdk.api.config.MessageHandlingOptions;
+import com.hivemq.adapter.sdk.api.config.MqttUserProperty;
+import com.hivemq.adapter.sdk.api.config.PollingContext;
 import com.hivemq.adapter.sdk.api.model.ProtocolAdapterInput;
 import com.hivemq.adapter.sdk.api.polling.PollingInput;
-import com.hivemq.adapter.sdk.api.polling.PollingOutput;
 import com.hivemq.edge.adapters.helloworld.config.HelloWorldAdapterConfig;
-import com.hivemq.edge.adapters.helloworld.config.HelloWorldPollingContext;
 import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
@@ -38,18 +39,19 @@ import static org.mockito.Mockito.when;
 class HelloWorldPollingProtocolAdapterTest {
 
     @TempDir
-    @NotNull File temporaryDir;
+    @NotNull
+    File temporaryDir;
 
     private final @NotNull ProtocolAdapterInput<HelloWorldAdapterConfig> adapterInput = mock();
-    private final @NotNull  HelloWorldAdapterConfig config = mock();
+    private final @NotNull HelloWorldAdapterConfig config = mock();
 
     @Test
     void test_poll_whenFileIsPresent_thenFileContentsAreSetInOutput() throws IOException {
         final File fileWithData = new File(temporaryDir, "data.txt");
         Files.write(fileWithData.toPath(), "Hello World".getBytes(StandardCharsets.UTF_8));
         when(adapterInput.getConfig()).thenReturn(config);
-        PollingInput<HelloWorldPollingContext> pollingInput = mock();
-        when(pollingInput.getPollingContext()).thenReturn(new HelloWorldPollingContext("mqttTopic", 1, List.of()));
+        PollingInput pollingInput = mock();
+        when(pollingInput.getPollingContext()).thenReturn(mock());
         TestPollingOutput pollingOutput = new TestPollingOutput();
 
         HelloWorldPollingProtocolAdapter adapter = new HelloWorldPollingProtocolAdapter(new HelloWorldProtocolAdapterInformation(), adapterInput);
