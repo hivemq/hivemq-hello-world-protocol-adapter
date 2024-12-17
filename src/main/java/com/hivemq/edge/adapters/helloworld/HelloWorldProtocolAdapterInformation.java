@@ -20,6 +20,10 @@ import com.hivemq.adapter.sdk.api.ProtocolAdapterCapability;
 import com.hivemq.adapter.sdk.api.ProtocolAdapterCategory;
 import com.hivemq.adapter.sdk.api.ProtocolAdapterInformation;
 import com.hivemq.adapter.sdk.api.ProtocolAdapterTag;
+import com.hivemq.adapter.sdk.api.config.ProtocolSpecificAdapterConfig;
+import com.hivemq.adapter.sdk.api.tag.Tag;
+import com.hivemq.edge.adapters.helloworld.config.HelloWorldAdapterConfig;
+import com.hivemq.edge.adapters.helloworld.config.HelloWorldAdapterTag;
 import org.apache.commons.io.IOUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -110,6 +114,8 @@ public class HelloWorldProtocolAdapterInformation implements ProtocolAdapterInfo
                 ProtocolAdapterTag.WEB);
     }
 
+
+
     @Override
     public @Nullable String getUiSchema() {
         try (final InputStream is = this.getClass()
@@ -125,4 +131,22 @@ public class HelloWorldProtocolAdapterInformation implements ProtocolAdapterInfo
             return null;
         }
     }
+
+    @Override
+    public @NotNull Class<? extends Tag> tagConfigurationClass() {
+        return HelloWorldAdapterTag.class;
+    }
+
+    @Override
+    public @NotNull Class<? extends ProtocolSpecificAdapterConfig> configurationClassNorthbound() {
+        return HelloWorldAdapterConfig.class;
+    }
+
+    @Override
+    public @NotNull Class<? extends ProtocolSpecificAdapterConfig> configurationClassNorthAndSouthbound() {
+        return HelloWorldAdapterConfig.class;
+    }
+
+
+
 }
