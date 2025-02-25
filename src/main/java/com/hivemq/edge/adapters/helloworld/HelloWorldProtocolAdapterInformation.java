@@ -133,6 +133,11 @@ public class HelloWorldProtocolAdapterInformation implements ProtocolAdapterInfo
     }
 
     @Override
+    public int getCurrentConfigVersion() {
+        return 1;
+    }
+
+    @Override
     public @NotNull Class<? extends Tag> tagConfigurationClass() {
         return HelloWorldAdapterTag.class;
     }
