@@ -16,7 +16,7 @@
 package com.hivemq.edge.adapters.helloworld;
 
 import com.hivemq.adapter.sdk.api.data.DataPoint;
-import com.hivemq.adapter.sdk.api.polling.PollingOutput;
+import com.hivemq.adapter.sdk.api.polling.batch.BatchPollingOutput;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -24,11 +24,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
-public class TestPollingOutput implements PollingOutput {
-
-    private final @NotNull Map<String, Object> dataPoints = new HashMap<>();
+public class TestPollingOutput implements BatchPollingOutput {
 
     final @NotNull CompletableFuture<Boolean> outputFuture = new CompletableFuture<>();
+    private final @NotNull Map<String, Object> dataPoints = new HashMap<>();
     private @Nullable String errorMessage = null;
 
     public TestPollingOutput() {

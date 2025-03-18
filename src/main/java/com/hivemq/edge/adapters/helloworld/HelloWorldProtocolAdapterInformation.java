@@ -30,7 +30,6 @@ import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.EnumSet;
@@ -109,11 +108,8 @@ public class HelloWorldProtocolAdapterInformation implements ProtocolAdapterInfo
     @Override
     public List<ProtocolAdapterTag> getTags() {
         // here you can set which Tags should be applied to this protocol adapter
-        return List.of(ProtocolAdapterTag.INTERNET,
-                ProtocolAdapterTag.TCP,
-                ProtocolAdapterTag.WEB);
+        return List.of(ProtocolAdapterTag.INTERNET, ProtocolAdapterTag.TCP, ProtocolAdapterTag.WEB);
     }
-
 
 
     @Override
@@ -151,7 +147,4 @@ public class HelloWorldProtocolAdapterInformation implements ProtocolAdapterInfo
     public @NotNull Class<? extends ProtocolSpecificAdapterConfig> configurationClassNorthAndSouthbound() {
         return HelloWorldAdapterConfig.class;
     }
-
-
-
 }

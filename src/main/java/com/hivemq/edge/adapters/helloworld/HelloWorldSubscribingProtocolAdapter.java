@@ -36,7 +36,8 @@ public class HelloWorldSubscribingProtocolAdapter implements ProtocolAdapter {
     private final @NotNull String adapterId;
 
     public HelloWorldSubscribingProtocolAdapter(
-            final @NotNull ProtocolAdapterInformation adapterInformation, final @NotNull ProtocolAdapterInput<HelloWorldAdapterConfig> input) {
+            final @NotNull ProtocolAdapterInformation adapterInformation,
+            final @NotNull ProtocolAdapterInput<HelloWorldAdapterConfig> input) {
         this.adapterId = input.getAdapterId();
         this.adapterInformation = adapterInformation;
         this.adapterConfig = input.getConfig();
