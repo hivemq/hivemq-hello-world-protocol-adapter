@@ -16,26 +16,25 @@
 package com.hivemq.edge.adapters.helloworld;
 
 import com.hivemq.adapter.sdk.api.ProtocolAdapterInformation;
-import com.hivemq.adapter.sdk.api.config.PollingContext;
 import com.hivemq.adapter.sdk.api.model.*;
-import com.hivemq.adapter.sdk.api.polling.PollingInput;
-import com.hivemq.adapter.sdk.api.polling.PollingOutput;
-import com.hivemq.adapter.sdk.api.polling.PollingProtocolAdapter;
+import com.hivemq.adapter.sdk.api.polling.batch.BatchPollingInput;
+import com.hivemq.adapter.sdk.api.polling.batch.BatchPollingOutput;
+import com.hivemq.adapter.sdk.api.polling.batch.BatchPollingProtocolAdapter;
 import com.hivemq.adapter.sdk.api.state.ProtocolAdapterState;
 import com.hivemq.edge.adapters.helloworld.config.HelloWorldAdapterConfig;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.List;
 
-
-public class HelloWorldPollingProtocolAdapter implements PollingProtocolAdapter{
+public class HelloWorldPollingProtocolAdapter implements BatchPollingProtocolAdapter {
 
     private final @NotNull HelloWorldAdapterConfig adapterConfig;
     private final @NotNull ProtocolAdapterInformation adapterInformation;
     private final @NotNull ProtocolAdapterState protocolAdapterState;
     private final @NotNull String adapterId;
 
-    public HelloWorldPollingProtocolAdapter(final @NotNull ProtocolAdapterInformation adapterInformation, final @NotNull ProtocolAdapterInput<HelloWorldAdapterConfig> input) {
+    public HelloWorldPollingProtocolAdapter(
+            final @NotNull ProtocolAdapterInformation adapterInformation,
+            final @NotNull ProtocolAdapterInput<HelloWorldAdapterConfig> input) {
         this.adapterId = input.getAdapterId();
         this.adapterInformation = adapterInformation;
         this.adapterConfig = input.getConfig();
@@ -48,7 +47,9 @@ public class HelloWorldPollingProtocolAdapter implements PollingProtocolAdapter{
     }
 
     @Override
-    public void start(final @NotNull ProtocolAdapterStartInput input, final @NotNull ProtocolAdapterStartOutput output) {
+    public void start(
+            final @NotNull ProtocolAdapterStartInput input,
+            final @NotNull ProtocolAdapterStartOutput output) {
         // any setup which should be done before the adapter starts polling comes here.
         try {
             protocolAdapterState.setConnectionStatus(ProtocolAdapterState.ConnectionStatus.STATELESS);
@@ -59,10 +60,11 @@ public class HelloWorldPollingProtocolAdapter implements PollingProtocolAdapter{
     }
 
     @Override
-    public void stop(final @NotNull ProtocolAdapterStopInput protocolAdapterStopInput, final @NotNull ProtocolAdapterStopOutput protocolAdapterStopOutput) {
+    public void stop(
+            final @NotNull ProtocolAdapterStopInput protocolAdapterStopInput,
+            final @NotNull ProtocolAdapterStopOutput protocolAdapterStopOutput) {
         protocolAdapterStopOutput.stoppedSuccessfully();
     }
-
 
     @Override
     public @NotNull ProtocolAdapterInformation getProtocolAdapterInformation() {
@@ -70,7 +72,9 @@ public class HelloWorldPollingProtocolAdapter implements PollingProtocolAdapter{
     }
 
     @Override
-    public void poll(final @NotNull PollingInput pollingInput, final @NotNull PollingOutput pollingOutput) {
+    public void poll(
+            final @NotNull BatchPollingInput pollingInput,
+            final @NotNull BatchPollingOutput pollingOutput) {
         // here the sampling must be done. F.e. sending a http request
         pollingOutput.addDataPoint("dataPoint1", 42);
         pollingOutput.addDataPoint("dataPoint2", 1337);

@@ -16,11 +16,8 @@
 package com.hivemq.edge.adapters.helloworld;
 
 
-import com.hivemq.adapter.sdk.api.config.MessageHandlingOptions;
-import com.hivemq.adapter.sdk.api.config.MqttUserProperty;
-import com.hivemq.adapter.sdk.api.config.PollingContext;
 import com.hivemq.adapter.sdk.api.model.ProtocolAdapterInput;
-import com.hivemq.adapter.sdk.api.polling.PollingInput;
+import com.hivemq.adapter.sdk.api.polling.batch.BatchPollingInput;
 import com.hivemq.edge.adapters.helloworld.config.HelloWorldAdapterConfig;
 import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.Test;
@@ -28,9 +25,7 @@ import org.junit.jupiter.api.io.TempDir;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
@@ -38,28 +33,25 @@ import static org.mockito.Mockito.when;
 
 class HelloWorldPollingProtocolAdapterTest {
 
-    @TempDir
-    @NotNull
-    File temporaryDir;
-
     private final @NotNull ProtocolAdapterInput<HelloWorldAdapterConfig> adapterInput = mock();
     private final @NotNull HelloWorldAdapterConfig config = mock();
+    private @TempDir
+    @NotNull File temporaryDir;
 
     @Test
     void test_poll_whenFileIsPresent_thenFileContentsAreSetInOutput() throws IOException {
         final File fileWithData = new File(temporaryDir, "data.txt");
-        Files.write(fileWithData.toPath(), "Hello World".getBytes(StandardCharsets.UTF_8));
+        Files.writeString(fileWithData.toPath(), "Hello World");
         when(adapterInput.getConfig()).thenReturn(config);
-        PollingInput pollingInput = mock();
-        when(pollingInput.getPollingContext()).thenReturn(mock());
-        TestPollingOutput pollingOutput = new TestPollingOutput();
+        final BatchPollingInput pollingInput = mock(BatchPollingInput.class);
+        final TestPollingOutput pollingOutput = new TestPollingOutput();
 
-        HelloWorldPollingProtocolAdapter adapter = new HelloWorldPollingProtocolAdapter(new HelloWorldProtocolAdapterInformation(), adapterInput);
+        final HelloWorldPollingProtocolAdapter adapter =
+                new HelloWorldPollingProtocolAdapter(new HelloWorldProtocolAdapterInformation(), adapterInput);
 
         adapter.poll(pollingInput, pollingOutput);
 
         assertEquals(42, pollingOutput.getDataPoints().get("dataPoint1"));
         assertEquals(1337, pollingOutput.getDataPoints().get("dataPoint2"));
-
     }
 }

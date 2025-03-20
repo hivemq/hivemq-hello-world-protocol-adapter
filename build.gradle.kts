@@ -30,6 +30,7 @@ dependencies {
     testImplementation("com.hivemq:hivemq-edge-adapter-sdk:${property("hivemq-edge-adapter-sdk.version")}")
     testImplementation("org.mockito:mockito-core:${property("mockito.version")}")
     testImplementation("com.fasterxml.jackson.core:jackson-databind:${property("jackson.version")}")
+    testRuntimeOnly("ch.qos.logback:logback-classic:${property("logback.version")}")
 }
 
 tasks.test {
