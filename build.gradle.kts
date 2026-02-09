@@ -41,3 +41,37 @@ license {
     header = file("HEADER")
     mapping("java", "SLASHSTAR_STYLE")
 }
+
+/* ******************** Visual UI Testing ******************** */
+
+// Configuration for the testing UI module
+val testingUi by configurations.creating
+
+dependencies {
+    // Add testing UI dependency (uncomment when published to Maven Central)
+    // testingUi("com.hivemq:hivemq-edge-adapter-sdk-testing-ui:1.0.0")
+}
+
+// Task to launch the visual UI test server
+// Run with: ./gradlew testUI
+tasks.register<JavaExec>("testUI") {
+    group = "verification"
+    description = "Launch visual UI test server for adapter configuration testing"
+
+    // Main class from the testing UI module
+    mainClass.set("com.hivemq.edge.adapters.testing.AdapterTestServer")
+
+    // Include adapter classes and testing UI on classpath
+    classpath = sourceSets.main.get().runtimeClasspath +
+            sourceSets.main.get().output +
+            configurations.compileClasspath.get()
+            // + testingUi  // Uncomment when testing UI is published
+
+    // System properties for configuration
+    systemProperty("server.port", project.findProperty("testUI.port") ?: "8080")
+
+    doFirst {
+        logger.lifecycle("Starting Adapter Test Server...")
+        logger.lifecycle("Adapter JAR: ${sourceSets.main.get().output.classesDirs.asPath}")
+    }
+}
