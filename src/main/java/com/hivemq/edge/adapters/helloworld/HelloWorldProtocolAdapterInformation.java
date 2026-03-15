@@ -21,9 +21,9 @@ import com.hivemq.adapter.sdk.api.ProtocolAdapterCategory;
 import com.hivemq.adapter.sdk.api.ProtocolAdapterInformation;
 import com.hivemq.adapter.sdk.api.ProtocolAdapterTag;
 import com.hivemq.adapter.sdk.api.config.ProtocolSpecificAdapterConfig;
-import com.hivemq.adapter.sdk.api.tag.Tag;
+import com.hivemq.adapter.sdk.api.tag.TagDefinition;
 import com.hivemq.edge.adapters.helloworld.config.HelloWorldAdapterConfig;
-import com.hivemq.edge.adapters.helloworld.config.HelloWorldAdapterTag;
+import com.hivemq.edge.adapters.helloworld.config.HelloWorldAdapterTagDefinition;
 import org.apache.commons.io.IOUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -134,8 +134,8 @@ public class HelloWorldProtocolAdapterInformation implements ProtocolAdapterInfo
     }
 
     @Override
-    public @NotNull Class<? extends Tag> tagConfigurationClass() {
-        return HelloWorldAdapterTag.class;
+    public @NotNull Class<? extends TagDefinition> tagDefinitionClass() {
+        return HelloWorldAdapterTagDefinition.class;
     }
 
     @Override
